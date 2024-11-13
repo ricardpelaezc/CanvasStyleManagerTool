@@ -26,6 +26,9 @@
 # Visual Studio cache directory
 .vs/
 
+# Visual Studio 2022 Config
+.vsconfig
+
 # Gradle cache directory
 .gradle/
 
