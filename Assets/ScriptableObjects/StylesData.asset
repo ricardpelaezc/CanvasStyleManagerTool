@@ -13,24 +13,53 @@ MonoBehaviour:
   m_Name: StylesData
   m_EditorClassIdentifier: 
   _imageStyleList:
-  - StyleName: 
-    Color: {r: 0, g: 0, b: 0, a: 0}
+  - Color: {r: 0.15723258, g: 0.15723258, b: 0.15723258, a: 1}
   _tMPTextStyleList:
-  - StyleName: 
-    Font: {fileID: 11400000, guid: fa81609220fe31644a5388b204923086, type: 2}
-    Color: {r: 1, g: 0, b: 0.15868568, a: 1}
-    FontSize: 40
+  - FontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+    VertexColor: {r: 1, g: 1, b: 1, a: 1}
+    FontSize: 30
   _buttonStyleList:
-  - StyleName: 
-    ImgStyle:
-      StyleName: 
+  - BackgroundStyle:
+      Color: {r: 0.3018868, g: 0.3018868, b: 0.3018868, a: 1}
+    TargetGraphicStyle:
+      Color: {r: 0.9496855, g: 0.9496855, b: 0.9496855, a: 1}
+    TextStyle:
+      FontAsset: {fileID: 0}
+      VertexColor: {r: 0, g: 0, b: 0, a: 0}
+      FontSize: 0
+  _scrollbarStyles:
+  - BackgroundStyle:
+      Color: {r: 1, g: 0.43710685, b: 0.43710685, a: 1}
+    TargetGraphicStyle:
       Color: {r: 1, g: 1, b: 1, a: 1}
-    TMPTextStyle:
-      StyleName: 
-      Font: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-      Color: {r: 0, g: 0, b: 0, a: 1}
-      FontSize: 25
-  _sliderStyleList: []
-  _toggleStyleList: []
-  _tMPDropdownStyleList: []
-  _tMPInputFiledStyleList: []
+  _scrollRectStyles:
+  - ContentStyle:
+      Color: {r: 0, g: 0, b: 0, a: 0}
+  _sliderStyleList:
+  - BackgroundStyle:
+      Color: {r: 0.5019608, g: 0.56699973, b: 0.68235296, a: 1}
+    TargetGraphicStyle:
+      Color: {r: 0.092864275, g: 1, b: 0, a: 1}
+  _toggleStyleList:
+  - BackgroundStyle:
+      Color: {r: 0, g: 0, b: 0, a: 0}
+    TargetGraphicStyle:
+      Color: {r: 0, g: 0, b: 0, a: 0}
+  _tMPDropdownStyleList:
+  - BackgroundStyle:
+      Color: {r: 0, g: 0, b: 0, a: 0}
+    TargetGraphicStyle:
+      Color: {r: 0, g: 0, b: 0, a: 0}
+    TextStyle:
+      FontAsset: {fileID: 0}
+      VertexColor: {r: 0, g: 0, b: 0, a: 0}
+      FontSize: 0
+  _tMPInputFiledStyleList:
+  - BackgroundStyle:
+      Color: {r: 0, g: 0, b: 0, a: 0}
+    TargetGraphicStyle:
+      Color: {r: 0, g: 0, b: 0, a: 0}
+    TextStyle:
+      FontAsset: {fileID: 0}
+      VertexColor: {r: 0, g: 0, b: 0, a: 0}
+      FontSize: 0

@@ -7,29 +7,20 @@ using UnityEngine.UI;
 [System.Serializable]
 public class ButtonStyle : UIComponentStyle<Button>
 {
-    //Other Settings
-    public ImageStyle ImgStyle;
-    public TMPTextStyle TMPTextStyle;
-
-    public override void ApplyStyle(Button button)
+    public ImageStyle BackgroundStyle = new ImageStyle();
+    public ImageStyle TargetGraphicStyle = new ImageStyle();
+    public TMPTextStyle TextStyle = new TMPTextStyle();
+    public override void ApplyStyle(Button button, bool includeInactive)
     {
-        ImgStyle.ApplyStyle(button.targetGraphic as Image);
-        TextMeshProUGUI[] listText = button.transform.GetComponentsInChildren<TextMeshProUGUI>(true);
-        foreach (var text in listText)
-        {
-            TMPTextStyle.ApplyStyle(text);
-        }
+        base.ApplyStyle(button, includeInactive);
+        StylingUtility.ApplyStyleSelectable(TargetGraphicStyle, BackgroundStyle, button.targetGraphic as Image, button.transform, includeInactive);
+        StylingUtility.ApplyStyleOnTexts(TextStyle, button.transform, includeInactive);
     }
 
-    public override void OverrideAllComponentsOnPrefab(Button button)
+    public override void OverrideAllComponentsOnPrefab(Button button, bool includeInactive)
     {
-        CanvasStyleUtility.OverrideComponentOnPrefab(button);
-        ImgStyle.OverrideAllComponentsOnPrefab(button.targetGraphic as Image);
-        TextMeshProUGUI[] listText = button.transform.GetComponentsInChildren<TextMeshProUGUI>(true);
-        foreach (var text in listText)
-        {
-            TMPTextStyle.OverrideAllComponentsOnPrefab(text);
-        }
-        
+        base.OverrideAllComponentsOnPrefab(button, includeInactive);
+        StylingUtility.OverrideAllSelectableComponentsOnPrefab(TargetGraphicStyle, BackgroundStyle, button.targetGraphic as Image, button.transform, includeInactive);
+        StylingUtility.OverrideAllTextsComponentsOnPrefab(TextStyle, button.transform, includeInactive);
     }
 }

@@ -8,12 +8,10 @@ public class ImageStyle : UIComponentStyle<Image>
 {
     public Color Color;
 
-    public override void ApplyStyle(Image image)
+    public override void ApplyStyle(Image image, bool includeInactive)
     {
+        base.ApplyStyle(image, includeInactive);
+
         image.color = Color;
-    }
-    public override void OverrideAllComponentsOnPrefab(Image image)
-    {
-        CanvasStyleUtility.OverrideComponentOnPrefab(image);
     }
 }

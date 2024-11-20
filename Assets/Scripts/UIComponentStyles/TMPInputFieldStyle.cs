@@ -1,18 +1,27 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class TMPInputFieldStyle : MonoBehaviour
+[System.Serializable]
+public class TMPInputFieldStyle : UIComponentStyle<TMP_InputField>
 {
-    // Start is called before the first frame update
-    void Start()
+    public ImageStyle BackgroundStyle = new ImageStyle();
+    public ImageStyle TargetGraphicStyle = new ImageStyle();
+    public TMPTextStyle TextStyle = new TMPTextStyle();
+    public override void ApplyStyle(TMP_InputField inputField, bool includeInactive)
     {
-        
+        base.ApplyStyle(inputField, includeInactive);
+        StylingUtility.ApplyStyleSelectable(TargetGraphicStyle, BackgroundStyle, inputField.targetGraphic as Image, inputField.transform, includeInactive);
+        StylingUtility.ApplyStyleOnTexts(TextStyle, inputField.transform, includeInactive);
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void OverrideAllComponentsOnPrefab(TMP_InputField inputField, bool includeInactive)
     {
-        
+        base.OverrideAllComponentsOnPrefab(inputField, includeInactive);
+        StylingUtility.OverrideAllSelectableComponentsOnPrefab(TargetGraphicStyle, BackgroundStyle, inputField.targetGraphic as Image, inputField.transform, includeInactive);
+        StylingUtility.OverrideAllTextsComponentsOnPrefab(TextStyle, inputField.transform, includeInactive);
     }
 }
+

@@ -13,24 +13,65 @@ MonoBehaviour:
   m_Name: StylesData 1
   m_EditorClassIdentifier: 
   _imageStyleList:
-  - StyleName: 
-    Color: {r: 0, g: 0, b: 0, a: 0}
+  - Color: {r: 0.52533525, g: 0.69375736, b: 0.7169812, a: 1}
   _tMPTextStyleList:
-  - StyleName: 
-    Font: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  - Font: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
     Color: {r: 0.020222902, g: 1, b: 0, a: 1}
     FontSize: 25
   _buttonStyleList:
-  - StyleName: 
-    ImgStyle:
-      StyleName: 
+  - TargetGraphicStyle:
       Color: {r: 0, g: 0, b: 0, a: 1}
-    TMPTextStyle:
-      StyleName: 
+    BackgroundStyle:
+      Color: {r: 0.3773585, g: 0.3773585, b: 0.3773585, a: 1}
+    TextStyle:
       Font: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-      Color: {r: 1, g: 1, b: 1, a: 1}
-      FontSize: 40
-  _sliderStyleList: []
-  _toggleStyleList: []
-  _tMPDropdownStyleList: []
-  _tMPInputFiledStyleList: []
+      Color: {r: 0, g: 0, b: 1, a: 1}
+      FontSize: 0
+  _scrollbarStyles:
+  - TargetGraphicStyle:
+      Color: {r: 0, g: 0, b: 0, a: 1}
+    BackgroundStyle:
+      Color: {r: 0.3773585, g: 0.3773585, b: 0.3773585, a: 1}
+    TextStyle:
+      Font: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+      Color: {r: 0, g: 0, b: 1, a: 1}
+      FontSize: 0
+  _scrollRectStyles:
+  - ContentStyle:
+      Color: {r: 0.30980393, g: 0.30980393, b: 0.30980393, a: 1}
+  _sliderStyleList:
+  - TargetGraphicStyle:
+      Color: {r: 0, g: 0, b: 0, a: 1}
+    BackgroundStyle:
+      Color: {r: 0.3773585, g: 0.3773585, b: 0.3773585, a: 1}
+    TextStyle:
+      Font: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+      Color: {r: 0, g: 0, b: 1, a: 1}
+      FontSize: 0
+  _toggleStyleList:
+  - TargetGraphicStyle:
+      Color: {r: 0, g: 0, b: 0, a: 1}
+    BackgroundStyle:
+      Color: {r: 0.3773585, g: 0.3773585, b: 0.3773585, a: 1}
+    TextStyle:
+      Font: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+      Color: {r: 0, g: 0, b: 1, a: 1}
+      FontSize: 0
+  _tMPDropdownStyleList:
+  - TargetGraphicStyle:
+      Color: {r: 0, g: 0, b: 0, a: 1}
+    BackgroundStyle:
+      Color: {r: 0.3773585, g: 0.3773585, b: 0.3773585, a: 1}
+    TextStyle:
+      Font: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+      Color: {r: 0, g: 0, b: 1, a: 1}
+      FontSize: 0
+  _tMPInputFiledStyleList:
+  - TargetGraphicStyle:
+      Color: {r: 0, g: 0, b: 0, a: 1}
+    BackgroundStyle:
+      Color: {r: 0.3773585, g: 0.3773585, b: 0.3773585, a: 1}
+    TextStyle:
+      Font: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+      Color: {r: 0, g: 0, b: 1, a: 1}
+      FontSize: 0

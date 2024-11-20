@@ -1,18 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class SliderStyle : MonoBehaviour
+[System.Serializable]
+public class SliderStyle : UIComponentStyle<Slider>
 {
-    // Start is called before the first frame update
-    void Start()
+    public ImageStyle BackgroundStyle = new ImageStyle();
+    public ImageStyle TargetGraphicStyle = new ImageStyle();
+    public override void ApplyStyle(Slider slider, bool includeInactive)
     {
-        
+        base.ApplyStyle(slider, includeInactive);
+        StylingUtility.ApplyStyleSelectable(TargetGraphicStyle, BackgroundStyle, slider.targetGraphic as Image, slider.transform, includeInactive);
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void OverrideAllComponentsOnPrefab(Slider slider, bool includeInactive)
     {
-        
+        base.OverrideAllComponentsOnPrefab(slider, includeInactive);
+        StylingUtility.OverrideAllSelectableComponentsOnPrefab(TargetGraphicStyle, BackgroundStyle, slider.targetGraphic as Image, slider.transform, includeInactive);
     }
 }

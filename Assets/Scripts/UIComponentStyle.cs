@@ -1,14 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIComponentStyle<T>
 {
-    [SerializeField]
-    public string StyleName;
-
-    public virtual void ApplyStyle (T uIComponent) 
+    public virtual void ApplyStyle (T uIComponent, bool includeInactive) 
     {
         if (uIComponent == null) 
         {
@@ -21,5 +20,8 @@ public class UIComponentStyle<T>
         }
     }
 
-    public virtual void OverrideAllComponentsOnPrefab(T uIComponent) { }
+    public virtual void OverrideAllComponentsOnPrefab(T uIComponent, bool includeInactive) 
+    {
+        StylingUtility.OverrideComponentOnPrefab(uIComponent as Component);
+    }
 }

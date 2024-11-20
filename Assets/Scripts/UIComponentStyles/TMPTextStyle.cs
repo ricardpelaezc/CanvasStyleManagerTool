@@ -6,19 +6,16 @@ using TMPro;
 [System.Serializable]
 public class TMPTextStyle : UIComponentStyle<TextMeshProUGUI>
 {
-    public TMP_FontAsset Font;
-    public Color Color;
+    public TMP_FontAsset FontAsset;
+    public Color VertexColor;
     public int FontSize;
 
-    public override void ApplyStyle(TextMeshProUGUI text)
+    public override void ApplyStyle(TextMeshProUGUI text, bool includeInactive)
     {
-        text.font = Font;
-        text.color = Color;
-        text.fontSize = FontSize;
-    }
+        base.ApplyStyle(text, includeInactive);
 
-    public override void OverrideAllComponentsOnPrefab(TextMeshProUGUI text)
-    {
-        CanvasStyleUtility.OverrideComponentOnPrefab(text);
+        text.font = FontAsset;
+        text.color = VertexColor;
+        text.fontSize = FontSize;
     }
 }
