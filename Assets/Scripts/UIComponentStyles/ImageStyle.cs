@@ -6,12 +6,17 @@ using UnityEngine.UI;
 [System.Serializable]
 public class ImageStyle : UIComponentStyle<Image>
 {
-    public Color Color;
+    public OverrideableStyleProperty<Color> Color = new OverrideableStyleProperty<Color>();
+    public ImageStyle(StylingData stylingData)
+    {
+        Color = new OverrideableStyleProperty<Color>();
+    }
 
     public override void ApplyStyle(Image image, bool includeInactive)
     {
         base.ApplyStyle(image, includeInactive);
 
-        image.color = Color;
+        //Debug.Log(image);
+        image.color = Color.Value;
     }
 }

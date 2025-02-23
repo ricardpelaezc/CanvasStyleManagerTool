@@ -6,7 +6,28 @@ using UnityEngine.UI;
 [System.Serializable]
 public class ScrollRectStyle : UIComponentStyle<ScrollRect>
 {
-    public ImageStyle ContentStyle = new ImageStyle();
+    public ImageStyle ContentStyle;
+
+    public ScrollRectStyle(StylingData stylingData)
+    {
+        ContentStyle = new ImageStyle(stylingData);
+
+        stylingData.onDefaultImageTargetColorChanged += ContentStyle.Color.SetDefault;
+    }
+
+    public void InitDelegates(StylingData stylingData)
+    {
+        stylingData.onDefaultImageTargetColorChanged -= ContentStyle.Color.SetDefault;
+        stylingData.onDefaultImageTargetColorChanged += ContentStyle.Color.SetDefault;
+
+        ContentStyle.Color.SetDefault(stylingData.DefaultImageTargetColor);
+    }
+
+    public void ClearDelegates(StylingData stylingData)
+    {
+        stylingData.onDefaultImageTargetColorChanged -= ContentStyle.Color.SetDefault;
+    }
+
     public override void ApplyStyle(ScrollRect scrollRect, bool includeInactive)
     {
         base.ApplyStyle(scrollRect, includeInactive);

@@ -4,18 +4,25 @@ using UnityEngine;
 using TMPro;
 
 [System.Serializable]
-public class TMPTextStyle : UIComponentStyle<TextMeshProUGUI>
+public class TMPTextStyle : UIComponentStyle<TextMeshProUGUI> //Base Class
 {
-    public TMP_FontAsset FontAsset;
-    public Color VertexColor;
-    public int FontSize;
+    public OverrideableStyleProperty<TMP_FontAsset> FontAsset = new OverrideableStyleProperty<TMP_FontAsset>();
+    public OverrideableStyleProperty<int> FontSize = new OverrideableStyleProperty<int>();
+    public OverrideableStyleProperty<Color> VertexColor = new OverrideableStyleProperty<Color>();
+
+    public TMPTextStyle(StylingData stylingData)
+    {
+        FontAsset = new OverrideableStyleProperty<TMP_FontAsset>();
+        FontSize = new OverrideableStyleProperty<int>();
+        VertexColor = new OverrideableStyleProperty<Color>();
+    }
 
     public override void ApplyStyle(TextMeshProUGUI text, bool includeInactive)
     {
         base.ApplyStyle(text, includeInactive);
 
-        text.font = FontAsset;
-        text.color = VertexColor;
-        text.fontSize = FontSize;
+        text.font = FontAsset.Value;
+        text.color = VertexColor.Value;
+        text.fontSize = FontSize.Value;
     }
 }

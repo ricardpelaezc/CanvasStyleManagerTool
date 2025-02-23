@@ -17,13 +17,27 @@ public enum SaveMode
 [ExecuteInEditMode]
 public class StylingManager : MonoBehaviour
 {
+    private static int _undoGroup;
+
     [Header("Style Data")]
     public StylingData StyleData;
 
     [Header("To Apply")]
     public bool IncludeInactive;
     public SaveMode Mode;
-    public static bool Apply;
+    public static bool Apply; //Maybe nonstatic
+    public bool ApplyTest;
+
+    private void OnEnable()
+    {
+        Apply = true;
+    }
+
+    public static void CollapseObjectUndo()
+    {
+        Debug.Log("Collapse UNDO");
+        Undo.CollapseUndoOperations(_undoGroup);
+    }
 
     /*
     Apply All Style Setting
@@ -35,9 +49,11 @@ public class StylingManager : MonoBehaviour
         where TUIComponent : MonoBehaviour
     {
         TUIComponent[] listComponent = transform.GetComponentsInChildren<TUIComponent>(IncludeInactive);
-
+        
         Undo.SetCurrentGroupName("Apply Style to All Components");
-        int undoGroup = Undo.GetCurrentGroup();
+        _undoGroup = Undo.GetCurrentGroup();
+
+        Undo.RecordObject(StyleData, "Apply Style");
 
         foreach (var component in listComponent)
         {
@@ -45,7 +61,6 @@ public class StylingManager : MonoBehaviour
 
             style.ApplyStyle(component, IncludeInactive);
 
-            Debug.Log(Mode);
             if (Mode == SaveMode.OUTERMOST_PREFAB)
             {
                 if (PrefabUtility.IsPartOfAnyPrefab(component))
@@ -54,16 +69,22 @@ public class StylingManager : MonoBehaviour
                 }
             }
         }
-
-        Undo.CollapseUndoOperations(undoGroup);
     }
 
     private void Update()
     {
+        if (ApplyTest)
+        {
+            Apply = true; ApplyTest = false;
+        }
+
         if (Apply)
         {
-            ApplyStyleToAllUIComponents <ImageStyle, Image>(StyleData.GetIndex<ImageStyle>(0));
-            ApplyStyleToAllUIComponents<TMPTextStyle, TextMeshProUGUI>(StyleData.GetIndex<TMPTextStyle>(0));
+            //DEFAULT STYLE
+            ApplyStyleToAllUIComponents<DefaultImageStyle, Image>(StyleData.DefaultImageStyle);
+            ApplyStyleToAllUIComponents<DefaultTMPTextStyle, TextMeshProUGUI>(StyleData.DefaultTMPTextStyle);
+
+            //STYLES
             ApplyStyleToAllUIComponents<ButtonStyle, Button>(StyleData.GetIndex<ButtonStyle>(0));
             ApplyStyleToAllUIComponents<SliderStyle, Slider>(StyleData.GetIndex<SliderStyle>(0));
             ApplyStyleToAllUIComponents<ScrollbarStyle, Scrollbar>(StyleData.GetIndex<ScrollbarStyle>(0));
@@ -71,6 +92,7 @@ public class StylingManager : MonoBehaviour
             ApplyStyleToAllUIComponents<ToggleStyle, Toggle>(StyleData.GetIndex<ToggleStyle>(0));
             ApplyStyleToAllUIComponents<TMPDropdownStyle, TMP_Dropdown>(StyleData.GetIndex<TMPDropdownStyle>(0));
             ApplyStyleToAllUIComponents<TMPInputFieldStyle, TMP_InputField>(StyleData.GetIndex<TMPInputFieldStyle>(0));
+
             Apply = false;
         }
     }
