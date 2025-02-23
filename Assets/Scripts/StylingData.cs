@@ -164,29 +164,28 @@ public class StylingData : ScriptableObject
     [SerializeField] private List<TMPDropdownStyle> _tMPDropdownStyleList;
     [SerializeField] private List<TMPInputFieldStyle> _tMPInputFiledStyleList;
 
-    private void OnEnable()
+
+
+    private void Awake()
     {
+        //Only if just created
         if (Empty<ButtonStyle>())
+        {
             SetIndex(0, new ButtonStyle(this));
-
-        if (Empty<ScrollbarStyle>())
             SetIndex(0, new ScrollbarStyle(this));
-
-        if (Empty<ScrollRectStyle>())
             SetIndex(0, new ScrollRectStyle(this));
-
-        if (Empty<SliderStyle>())
             SetIndex(0, new SliderStyle(this));
-
-        if (Empty<ToggleStyle>())
             SetIndex(0, new ToggleStyle(this));
-
-        if (Empty<TMPDropdownStyle>())
             SetIndex(0, new TMPDropdownStyle(this));
-
-        if (Empty<TMPInputFieldStyle>())
             SetIndex(0, new TMPInputFieldStyle(this));
 
+            EditorUtility.SetDirty(this);
+            AssetDatabase.SaveAssets();
+        }
+    }
+
+    private void OnEnable()
+    {
         GetIndex<ButtonStyle>(0).InitDelegates(this);
         GetIndex<ScrollbarStyle>(0).InitDelegates(this);
         GetIndex<ScrollRectStyle>(0).InitDelegates(this);
@@ -194,9 +193,6 @@ public class StylingData : ScriptableObject
         GetIndex<ToggleStyle>(0).InitDelegates(this);
         GetIndex<TMPDropdownStyle>(0).InitDelegates(this);
         GetIndex<TMPInputFieldStyle>(0).InitDelegates(this);
-
-        EditorUtility.SetDirty(this);
-        AssetDatabase.SaveAssets();
     }
 
     private void OnDisable()
