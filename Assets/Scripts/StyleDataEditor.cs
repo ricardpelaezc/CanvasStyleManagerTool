@@ -6,16 +6,16 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class StylingDataEditor : EditorWindow
+public class StyleDataEditor : EditorWindow
 {
-    [MenuItem("Tools/Canvas Style Manager")]
+    [MenuItem("Tools/Style Data Editor")]
     public static void ShowExample()
     {
-        GetWindow<StylingDataEditor>("Canvas Style");
+        GetWindow<StyleDataEditor>("Canvas Style");
     }
 
     private const string _keyEditorPrefsPath = "SelectedStylingDataPath";
-    private static StylingData _editingSD;
+    private static StyleData _editedSD;
 
     private bool _collapseUndoNeeded;
     private float _timeCollapseUndo = 2f;
@@ -43,10 +43,10 @@ public class StylingDataEditor : EditorWindow
         string selectedStylingDataPath = EditorPrefs.GetString(_keyEditorPrefsPath, "");
         if (!string.IsNullOrEmpty(selectedStylingDataPath))
         {
-            _editingSD = AssetDatabase.LoadAssetAtPath<StylingData>(selectedStylingDataPath);
+            _editedSD = AssetDatabase.LoadAssetAtPath<StyleData>(selectedStylingDataPath);
         }
 
-        if (_editingSD == null)
+        if (_editedSD == null)
         {
             Debug.LogWarning("No StylingData found. Create one and assign it.");
             return;
@@ -57,7 +57,7 @@ public class StylingDataEditor : EditorWindow
         if (_collapseUndoNeeded) _timerCollapseUndo += Time.deltaTime;
         if (_collapseUndoNeeded && _timerCollapseUndo >= _timeCollapseUndo)
         {
-            StylingManager.CollapseObjectUndo();
+            StyleManager.CollapseObjectUndo();
             _timerCollapseUndo = 0;
             _collapseUndoNeeded = false;
         }
@@ -65,12 +65,12 @@ public class StylingDataEditor : EditorWindow
     }
     public void OnGUI()
     {
-        if (!_editingSD)
+        if (!_editedSD)
         {
-            _editingSD = (StylingData) EditorGUILayout.ObjectField("Style Data", _editingSD, typeof(StylingData), false);
-            if (_editingSD)
+            _editedSD = (StyleData) EditorGUILayout.ObjectField("Style Data", _editedSD, typeof(StyleData), false);
+            if (_editedSD)
             {
-                string valueEdtiorPrefsPath = AssetDatabase.GetAssetPath(_editingSD);
+                string valueEdtiorPrefsPath = AssetDatabase.GetAssetPath(_editedSD);
                 EditorPrefs.SetString(_keyEditorPrefsPath, valueEdtiorPrefsPath);
             }
         }
@@ -78,10 +78,10 @@ public class StylingDataEditor : EditorWindow
         {
             EditorGUI.BeginChangeCheck();
             GUILayout.Space(10);
-            _editingSD = (StylingData)EditorGUILayout.ObjectField("Style Data", _editingSD, typeof(StylingData), false);
+            _editedSD = (StyleData)EditorGUILayout.ObjectField("Style Data", _editedSD, typeof(StyleData), false);
             if (EditorGUI.EndChangeCheck())
             {
-                string valueEdtiorPrefsPath = AssetDatabase.GetAssetPath(_editingSD);
+                string valueEdtiorPrefsPath = AssetDatabase.GetAssetPath(_editedSD);
                 EditorPrefs.SetString(_keyEditorPrefsPath, valueEdtiorPrefsPath);
             }
             GUILayout.Space(10);
@@ -113,9 +113,9 @@ public class StylingDataEditor : EditorWindow
                 _timerCollapseUndo = 0;
                 _collapseUndoNeeded = true;
 
-                StylingManager.Apply = true; //Applying everything to much too fast
+                StyleManager.Apply = true; //Applying everything to much too fast
 
-                EditorUtility.SetDirty(_editingSD);
+                EditorUtility.SetDirty(_editedSD);
                 AssetDatabase.SaveAssets();
                 AssetDatabase.Refresh();
             }
@@ -124,20 +124,20 @@ public class StylingDataEditor : EditorWindow
     private void RenderDefaultStyle()
     {
         GUILayout.Label("Default Background Graphic Style");
-        _editingSD.DefaultImageBackgroundColor = EditorGUILayout.ColorField("Color", _editingSD.DefaultImageBackgroundColor);
+        _editedSD.DefaultImageBackgroundColor = EditorGUILayout.ColorField("Color", _editedSD.DefaultImageBackgroundColor);
 
         GUILayout.Label("Default Target Graphic Style");
-        _editingSD.DefaultImageTargetColor = EditorGUILayout.ColorField("Color", _editingSD.DefaultImageTargetColor);
+        _editedSD.DefaultImageTargetColor = EditorGUILayout.ColorField("Color", _editedSD.DefaultImageTargetColor);
 
         GUILayout.Label("Default Text Style");
-        _editingSD.DefaultTMPTextFontAsset = 
-            (TMP_FontAsset)EditorGUILayout.ObjectField("Font Asset", _editingSD.DefaultTMPTextFontAsset, typeof(TMP_FontAsset), false);
+        _editedSD.DefaultTextFontAsset = 
+            (TMP_FontAsset)EditorGUILayout.ObjectField("Font Asset", _editedSD.DefaultTextFontAsset, typeof(TMP_FontAsset), false);
 
-        _editingSD.DefaultTMPTextFontSize = 
-            EditorGUILayout.IntField("Font Size", _editingSD.DefaultTMPTextFontSize);
+        _editedSD.DefaultTextFontSize = 
+            EditorGUILayout.IntField("Font Size", _editedSD.DefaultTextFontSize);
 
-        _editingSD.DefaultTMPTextVertexColor = 
-            EditorGUILayout.ColorField("Vertex Color", _editingSD.DefaultTMPTextVertexColor);
+        _editedSD.DefaultTextVertexColor = 
+            EditorGUILayout.ColorField("Vertex Color", _editedSD.DefaultTextVertexColor);
     }
     private void RenderImageStyle(ImageStyle imageStyle)
     {
@@ -151,7 +151,7 @@ public class StylingDataEditor : EditorWindow
         if (imageStyle.Color.IsOverridden) HandleRightClick(fieldRect0, () => { imageStyle.Color.Revert(); });
     }
 
-    private void RenderTMPTextStyle(TMPTextStyle tMPTextStyle)
+    private void RenderTMPTextStyle(TextStyle tMPTextStyle)
     {
         Rect fieldRect0 = EditorGUILayout.GetControlRect();
         Rect fieldRect1 = EditorGUILayout.GetControlRect();
@@ -179,7 +179,7 @@ public class StylingDataEditor : EditorWindow
     }
     private void RenderButtonStyles()
     {
-        ButtonStyle tempButtonStyle = _editingSD.GetIndex<ButtonStyle>(0);
+        ButtonStyle tempButtonStyle = _editedSD.Return<ButtonStyle>();
         GUILayout.Label("Background Style");
         RenderImageStyle(tempButtonStyle.BackgroundStyle);
         GUILayout.Space(10);
@@ -188,49 +188,49 @@ public class StylingDataEditor : EditorWindow
         GUILayout.Space(10);
         GUILayout.Label("Text Style");
         RenderTMPTextStyle(tempButtonStyle.TextStyle);
-        _editingSD.SetIndex(0, tempButtonStyle);
+        _editedSD.Set(tempButtonStyle);
         //if (GUI.changed) {} Maybe
     }
     private void RenderScrollbarStyles()
     {
-        ScrollbarStyle tempScrollbarStyle = _editingSD.GetIndex<ScrollbarStyle>(0);
+        ScrollbarStyle tempScrollbarStyle = _editedSD.Return<ScrollbarStyle>();
         GUILayout.Label("Background Style");
         RenderImageStyle(tempScrollbarStyle.BackgroundStyle);
         GUILayout.Space(10);
         GUILayout.Label("Target Graphic Style");
         RenderImageStyle(tempScrollbarStyle.TargetGraphicStyle);
-        _editingSD.SetIndex(0, tempScrollbarStyle);
+        _editedSD.Set(tempScrollbarStyle);
     }
     private void RenderScrollRectStyles()
     {
-        ScrollRectStyle tempScrollRectStyle = _editingSD.GetIndex<ScrollRectStyle>(0);
+        ScrollRectStyle tempScrollRectStyle = _editedSD.Return<ScrollRectStyle>();
         GUILayout.Label("Content Style");
         RenderImageStyle(tempScrollRectStyle.ContentStyle);
-        _editingSD.SetIndex(0, tempScrollRectStyle);
+        _editedSD.Set(tempScrollRectStyle);
     }
     private void RenderSliderStyles()
     {
-        SliderStyle tempSliderStyle = _editingSD.GetIndex<SliderStyle>(0);
+        SliderStyle tempSliderStyle = _editedSD.Return<SliderStyle>();
         GUILayout.Label("Background Style");
         RenderImageStyle(tempSliderStyle.BackgroundStyle);
         GUILayout.Space(10);
         GUILayout.Label("Target Graphic Style");
         RenderImageStyle(tempSliderStyle.TargetGraphicStyle);
-        _editingSD.SetIndex(0, tempSliderStyle);
+        _editedSD.Set(tempSliderStyle);
     }
     private void RenderToggleStyles()
     {
-        ToggleStyle tempToggleStyle = _editingSD.GetIndex<ToggleStyle>(0);
+        ToggleStyle tempToggleStyle = _editedSD.Return<ToggleStyle>();
         GUILayout.Label("Background Style");
         RenderImageStyle(tempToggleStyle.BackgroundStyle);
         GUILayout.Space(10);
         GUILayout.Label("Target Graphic Style");
         RenderImageStyle(tempToggleStyle.TargetGraphicStyle);
-        _editingSD.SetIndex(0, tempToggleStyle);
+        _editedSD.Set(tempToggleStyle);
     }
     private void RenderTMPDropdownStyles()
     {
-        TMPDropdownStyle tempDropdownStyle = _editingSD.GetIndex<TMPDropdownStyle>(0);
+        DropdownStyle tempDropdownStyle = _editedSD.Return<DropdownStyle>();
         GUILayout.Label("Background Style");
         RenderImageStyle(tempDropdownStyle.BackgroundStyle);
         GUILayout.Space(10);
@@ -239,11 +239,11 @@ public class StylingDataEditor : EditorWindow
         GUILayout.Space(10);
         GUILayout.Label("Text Style");
         RenderTMPTextStyle(tempDropdownStyle.TextStyle);
-        _editingSD.SetIndex(0, tempDropdownStyle);
+        _editedSD.Set(tempDropdownStyle);
     }
     private void RenderTMPInputFieldStyles()
     {
-        TMPInputFieldStyle tempInputFieldStyle = _editingSD.GetIndex<TMPInputFieldStyle>(0);
+        InputFieldStyle tempInputFieldStyle = _editedSD.Return<InputFieldStyle>();
         GUILayout.Label("Background Style");
         RenderImageStyle(tempInputFieldStyle.BackgroundStyle);
         GUILayout.Space(10);
@@ -252,7 +252,7 @@ public class StylingDataEditor : EditorWindow
         GUILayout.Space(10);
         GUILayout.Label("Text Style");
         RenderTMPTextStyle(tempInputFieldStyle.TextStyle);
-        _editingSD.SetIndex(0, tempInputFieldStyle);
+        _editedSD.Set(tempInputFieldStyle);
     }
 
     private void HandleRightClick(Rect rect, System.Action onRevert)

@@ -10,14 +10,14 @@ public class SliderStyle : UIComponentStyle<Slider>
     public ImageStyle BackgroundStyle;
     public ImageStyle TargetGraphicStyle;
 
-    public SliderStyle(StylingData stylingData)
+    public SliderStyle(StyleData styleData)
     {
-        BackgroundStyle = new ImageStyle(stylingData);
-        TargetGraphicStyle = new ImageStyle(stylingData);
+        BackgroundStyle = new ImageStyle(styleData);
+        TargetGraphicStyle = new ImageStyle(styleData);
 
-        InitDelegates(stylingData);
+        StyleUtility.SliderStyleSetDefault(styleData);
     }
-    public void InitDelegates(StylingData stylingData)
+    public void InitDelegates(StyleData stylingData)
     {
         stylingData.onDefaultImageBackgroundColorChanged -= BackgroundStyle.Color.SetDefault;
         stylingData.onDefaultImageBackgroundColorChanged += BackgroundStyle.Color.SetDefault;
@@ -28,7 +28,7 @@ public class SliderStyle : UIComponentStyle<Slider>
         TargetGraphicStyle.Color.SetDefault(stylingData.DefaultImageTargetColor);
     }
 
-    public void ClearDelegates(StylingData stylingData)
+    public void ClearDelegates(StyleData stylingData)
     {
         stylingData.onDefaultImageBackgroundColorChanged -= BackgroundStyle.Color.SetDefault;
         stylingData.onDefaultImageTargetColorChanged -= TargetGraphicStyle.Color.SetDefault;
@@ -37,12 +37,12 @@ public class SliderStyle : UIComponentStyle<Slider>
     public override void ApplyStyle(Slider slider, bool includeInactive)
     {
         base.ApplyStyle(slider, includeInactive);
-        StylingUtility.ApplyStyleSelectable(TargetGraphicStyle, BackgroundStyle, slider.targetGraphic as Image, slider.transform, includeInactive);
+        StyleUtility.ApplyStyleSelectable(TargetGraphicStyle, BackgroundStyle, slider.targetGraphic as Image, slider.transform, includeInactive);
     }
 
     public override void OverrideAllComponentsOnPrefab(Slider slider, bool includeInactive)
     {
         base.OverrideAllComponentsOnPrefab(slider, includeInactive);
-        StylingUtility.OverrideAllSelectableComponentsOnPrefab(TargetGraphicStyle, BackgroundStyle, slider.targetGraphic as Image, slider.transform, includeInactive);
+        StyleUtility.OverrideAllSelectableComponentsOnPrefab(TargetGraphicStyle, BackgroundStyle, slider.targetGraphic as Image, slider.transform, includeInactive);
     }
 }

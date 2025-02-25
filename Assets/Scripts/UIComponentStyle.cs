@@ -40,7 +40,7 @@ public class OverrideableStyleProperty<T>
 
     public void Revert()
     {
-        StylingManager.Apply = true; //Careful here
+        StyleManager.Apply = true; //Careful here
         _currentValue = _defaultValue;
         _isOverridden = false;
     }
@@ -63,6 +63,6 @@ public abstract class UIComponentStyle<T>
 
     public virtual void OverrideAllComponentsOnPrefab(T uIComponent, bool includeInactive) 
     {
-        StylingUtility.OverrideComponentOnPrefab(uIComponent as Component);
+        StyleUtility.OverrideComponentOnPrefab(uIComponent as Component);
     }
 }

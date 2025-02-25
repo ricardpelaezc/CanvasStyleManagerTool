@@ -10,39 +10,23 @@ public class ToggleStyle : UIComponentStyle<Toggle>
     public ImageStyle BackgroundStyle;
     public ImageStyle TargetGraphicStyle;
 
-    public ToggleStyle(StylingData stylingData)
+    public ToggleStyle(StyleData styleData)
     {
-        BackgroundStyle = new ImageStyle(stylingData);
-        TargetGraphicStyle = new ImageStyle(stylingData);
+        BackgroundStyle = new ImageStyle(styleData);
+        TargetGraphicStyle = new ImageStyle(styleData);
 
-        InitDelegates(stylingData);
-    }
-    public void InitDelegates(StylingData stylingData)
-    {
-        stylingData.onDefaultImageBackgroundColorChanged -= BackgroundStyle.Color.SetDefault;
-        stylingData.onDefaultImageBackgroundColorChanged += BackgroundStyle.Color.SetDefault;
-        stylingData.onDefaultImageTargetColorChanged -= TargetGraphicStyle.Color.SetDefault;
-        stylingData.onDefaultImageTargetColorChanged += TargetGraphicStyle.Color.SetDefault;
-
-        BackgroundStyle.Color.SetDefault(stylingData.DefaultImageBackgroundColor);
-        TargetGraphicStyle.Color.SetDefault(stylingData.DefaultImageTargetColor);
-    }
-
-    public void ClearDelegates(StylingData stylingData)
-    {
-        stylingData.onDefaultImageBackgroundColorChanged -= BackgroundStyle.Color.SetDefault;
-        stylingData.onDefaultImageTargetColorChanged -= TargetGraphicStyle.Color.SetDefault;
+        StyleUtility.ToggleStyleSetDefault(styleData);
     }
 
     public override void ApplyStyle(Toggle toggle, bool includeInactive)
     {
         base.ApplyStyle(toggle, includeInactive);
-        StylingUtility.ApplyStyleSelectable(TargetGraphicStyle, BackgroundStyle, toggle.targetGraphic as Image, toggle.transform, includeInactive);
+        StyleUtility.ApplyStyleSelectable(TargetGraphicStyle, BackgroundStyle, toggle.targetGraphic as Image, toggle.transform, includeInactive);
     }
 
     public override void OverrideAllComponentsOnPrefab(Toggle toggle, bool includeInactive)
     {
         base.OverrideAllComponentsOnPrefab(toggle, includeInactive);
-        StylingUtility.OverrideAllSelectableComponentsOnPrefab(TargetGraphicStyle, BackgroundStyle, toggle.targetGraphic as Image, toggle.transform, includeInactive);
+        StyleUtility.OverrideAllSelectableComponentsOnPrefab(TargetGraphicStyle, BackgroundStyle, toggle.targetGraphic as Image, toggle.transform, includeInactive);
     }
 }

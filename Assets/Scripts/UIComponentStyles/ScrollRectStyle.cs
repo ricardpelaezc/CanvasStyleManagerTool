@@ -8,24 +8,11 @@ public class ScrollRectStyle : UIComponentStyle<ScrollRect>
 {
     public ImageStyle ContentStyle;
 
-    public ScrollRectStyle(StylingData stylingData)
+    public ScrollRectStyle(StyleData styleData)
     {
-        ContentStyle = new ImageStyle(stylingData);
+        ContentStyle = new ImageStyle(styleData);
 
-        stylingData.onDefaultImageTargetColorChanged += ContentStyle.Color.SetDefault;
-    }
-
-    public void InitDelegates(StylingData stylingData)
-    {
-        stylingData.onDefaultImageTargetColorChanged -= ContentStyle.Color.SetDefault;
-        stylingData.onDefaultImageTargetColorChanged += ContentStyle.Color.SetDefault;
-
-        ContentStyle.Color.SetDefault(stylingData.DefaultImageTargetColor);
-    }
-
-    public void ClearDelegates(StylingData stylingData)
-    {
-        stylingData.onDefaultImageTargetColorChanged -= ContentStyle.Color.SetDefault;
+        StyleUtility.ScrollRectStyleSetDefault(styleData);
     }
 
     public override void ApplyStyle(ScrollRect scrollRect, bool includeInactive)
@@ -39,6 +26,6 @@ public class ScrollRectStyle : UIComponentStyle<ScrollRect>
     {
         base.ApplyStyle(scrollRect, includeInactive);
 
-        StylingUtility.OverrideComponentOnPrefab(scrollRect.viewport.GetComponent<Image>());
+        StyleUtility.OverrideComponentOnPrefab(scrollRect.viewport.GetComponent<Image>());
     }
 }

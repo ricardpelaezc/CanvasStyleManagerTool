@@ -4,13 +4,13 @@ using UnityEngine;
 using TMPro;
 
 [System.Serializable]
-public class TMPTextStyle : UIComponentStyle<TextMeshProUGUI> //Base Class
+public class TextStyle : UIComponentStyle<TextMeshProUGUI> //Base Class
 {
     public OverrideableStyleProperty<TMP_FontAsset> FontAsset = new OverrideableStyleProperty<TMP_FontAsset>();
     public OverrideableStyleProperty<int> FontSize = new OverrideableStyleProperty<int>();
     public OverrideableStyleProperty<Color> VertexColor = new OverrideableStyleProperty<Color>();
 
-    public TMPTextStyle(StylingData stylingData)
+    public TextStyle(StyleData stylingData)
     {
         FontAsset = new OverrideableStyleProperty<TMP_FontAsset>();
         FontSize = new OverrideableStyleProperty<int>();

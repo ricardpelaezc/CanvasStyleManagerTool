@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class ImageStyle : UIComponentStyle<Image>
 {
     public OverrideableStyleProperty<Color> Color = new OverrideableStyleProperty<Color>();
-    public ImageStyle(StylingData stylingData)
+    public ImageStyle(StyleData stylingData)
     {
         Color = new OverrideableStyleProperty<Color>();
     }

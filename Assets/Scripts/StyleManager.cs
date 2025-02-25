@@ -15,12 +15,12 @@ public enum SaveMode
 
 [RequireComponent(typeof(Canvas))]
 [ExecuteInEditMode]
-public class StylingManager : MonoBehaviour
+public class StyleManager : MonoBehaviour
 {
     private static int _undoGroup;
 
     [Header("Style Data")]
-    public StylingData StyleData;
+    public StyleData StyleData;
 
     [Header("To Apply")]
     public bool IncludeInactive;
@@ -82,16 +82,16 @@ public class StylingManager : MonoBehaviour
         {
             //DEFAULT STYLE
             ApplyStyleToAllUIComponents<DefaultImageStyle, Image>(StyleData.DefaultImageStyle);
-            ApplyStyleToAllUIComponents<DefaultTMPTextStyle, TextMeshProUGUI>(StyleData.DefaultTMPTextStyle);
+            ApplyStyleToAllUIComponents<DefaultTMPTextStyle, TextMeshProUGUI>(StyleData.DefaultTextStyle);
 
             //STYLES
-            ApplyStyleToAllUIComponents<ButtonStyle, Button>(StyleData.GetIndex<ButtonStyle>(0));
-            ApplyStyleToAllUIComponents<SliderStyle, Slider>(StyleData.GetIndex<SliderStyle>(0));
-            ApplyStyleToAllUIComponents<ScrollbarStyle, Scrollbar>(StyleData.GetIndex<ScrollbarStyle>(0));
-            ApplyStyleToAllUIComponents<ScrollRectStyle, ScrollRect>(StyleData.GetIndex<ScrollRectStyle>(0));
-            ApplyStyleToAllUIComponents<ToggleStyle, Toggle>(StyleData.GetIndex<ToggleStyle>(0));
-            ApplyStyleToAllUIComponents<TMPDropdownStyle, TMP_Dropdown>(StyleData.GetIndex<TMPDropdownStyle>(0));
-            ApplyStyleToAllUIComponents<TMPInputFieldStyle, TMP_InputField>(StyleData.GetIndex<TMPInputFieldStyle>(0));
+            ApplyStyleToAllUIComponents<ButtonStyle, Button>(StyleData.Return<ButtonStyle>());
+            ApplyStyleToAllUIComponents<SliderStyle, Slider>(StyleData.Return<SliderStyle>());
+            ApplyStyleToAllUIComponents<ScrollbarStyle, Scrollbar>(StyleData.Return<ScrollbarStyle>());
+            ApplyStyleToAllUIComponents<ScrollRectStyle, ScrollRect>(StyleData.Return<ScrollRectStyle>());
+            ApplyStyleToAllUIComponents<ToggleStyle, Toggle>(StyleData.Return<ToggleStyle>());
+            ApplyStyleToAllUIComponents<DropdownStyle, TMP_Dropdown>(StyleData.Return<DropdownStyle>());
+            ApplyStyleToAllUIComponents<InputFieldStyle, TMP_InputField>(StyleData.Return<InputFieldStyle>());
 
             Apply = false;
         }

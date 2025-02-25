@@ -10,15 +10,15 @@ public class ScrollbarStyle : UIComponentStyle<Scrollbar>
     public ImageStyle BackgroundStyle;
     public ImageStyle TargetGraphicStyle;
 
-    public ScrollbarStyle(StylingData stylingData)
+    public ScrollbarStyle(StyleData styleData)
     {
-        BackgroundStyle = new ImageStyle(stylingData);
-        TargetGraphicStyle = new ImageStyle(stylingData);
+        BackgroundStyle = new ImageStyle(styleData);
+        TargetGraphicStyle = new ImageStyle(styleData);
 
-        InitDelegates(stylingData);
+        StyleUtility.ScrollbarStyleSetDefault(styleData);
     }
 
-    public void InitDelegates(StylingData stylingData)
+    public void InitDelegates(StyleData stylingData)
     {
         stylingData.onDefaultImageBackgroundColorChanged -= BackgroundStyle.Color.SetDefault;
         stylingData.onDefaultImageBackgroundColorChanged += BackgroundStyle.Color.SetDefault;
@@ -29,7 +29,7 @@ public class ScrollbarStyle : UIComponentStyle<Scrollbar>
         TargetGraphicStyle.Color.SetDefault(stylingData.DefaultImageTargetColor);
     }
 
-    public void ClearDelegates(StylingData stylingData)
+    public void ClearDelegates(StyleData stylingData)
     {
         stylingData.onDefaultImageBackgroundColorChanged -= BackgroundStyle.Color.SetDefault;
         stylingData.onDefaultImageTargetColorChanged -= TargetGraphicStyle.Color.SetDefault;
@@ -38,12 +38,12 @@ public class ScrollbarStyle : UIComponentStyle<Scrollbar>
     public override void ApplyStyle(Scrollbar scrollbar, bool includeInactive)
     {
         base.ApplyStyle(scrollbar, includeInactive);
-        StylingUtility.ApplyStyleSelectable(TargetGraphicStyle, BackgroundStyle, scrollbar.targetGraphic as Image, scrollbar.transform, includeInactive);
+        StyleUtility.ApplyStyleSelectable(TargetGraphicStyle, BackgroundStyle, scrollbar.targetGraphic as Image, scrollbar.transform, includeInactive);
     }
 
     public override void OverrideAllComponentsOnPrefab(Scrollbar scrollbar, bool includeInactive)
     {
         base.OverrideAllComponentsOnPrefab(scrollbar, includeInactive);
-        StylingUtility.OverrideAllSelectableComponentsOnPrefab(TargetGraphicStyle, BackgroundStyle, scrollbar.targetGraphic as Image, scrollbar.transform, includeInactive);
+        StyleUtility.OverrideAllSelectableComponentsOnPrefab(TargetGraphicStyle, BackgroundStyle, scrollbar.targetGraphic as Image, scrollbar.transform, includeInactive);
     }
 }
